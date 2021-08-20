@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head-fragment">
+    <!--BootStrap-->
+    <meta charset="utf-8">
+    <meta http-equiv="Window-target" content="_top"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <!-- <meta> 标签提供了 HTML 文档的元数据。元数据不会显示在客户端，但是会被浏览器解析。-->
+    <meta name="description" th:content="${configurations.get('websiteDescription')}"><!--ognl表达式，调用的是Map的get(key)方法，根据键取值-->
+    <!-- thymeleaf中||为字符串拼接-->
+    <title th:text="|${configurations.get('websiteName')} - ${pageName}|">主页</title>
+    <link rel="shortcut icon" th:href="@{${configurations.get('websiteIcon')}}"/>
+    <link rel="stylesheet" th:href="@{/blog/amaze/css/base.css}">
+</head>
+<!--<nav>标签定义导航链接-->
+<nav th:fragment="nav-fragment" class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-for="toggle-items">
+                <span class="sr-only"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/" th:text="${configurations.get('websiteName')}"></a>
+        </div>
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a th:href="@{/index}">主页</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/link}">友链</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/about}">关于</a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/breezeqz/My-Blog">GitHub</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+        <script th:src="@{/blog/default/js/jquery.min.js}"></script>
+        <script>
+            $(function () {
+                $('.navbar-toggle').click(function () {
+                    $('#toggle-items').fadeToggle("fast");
+                });
+            })
+        </script>
+    </div>
+    <!-- /.container -->
+</nav>
+<header th:fragment="header-fragment" class="intro-header"
+        th:style="'background-image:url(' + @{/blog/amaze/images/header.jpg} + ');'">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="site-heading">
+          <span class="subheading">
+              我不怕千万人阻挡，只怕自己投降
+          </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+</html>

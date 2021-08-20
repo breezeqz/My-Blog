@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="blog-list-fragment" class="am-u-lg-8 am-u-sm-12">
+    <main class="articles-list">
+        <div>
+            <th:block th:if="${null != blogPageResult}">
+                <!-- 循环展示-->
+                <th:block th:each="blog,iterStat : ${blogPageResult.list}">
+                    <article class="am-g blog-entry-article">
+                        <div class="am-u-lg-6 am-u-lg-12 am-u-sm-12 blog-entry-text post-preview">
+                            <div class="topic-header">
+                                <div class="pull-left">
+                                    <div class="blog-flex-center">
+                                        <div class="blog-flex0">
+                                            <!-- 头像-->
+                                            <img th:src="@{${configurations.get('yourAvatar')}}" alt=""
+                                                 class="link avatar avatar-image">
+                                        </div>
+                                        <div class="author-lockup blog-flex1">
+                                            <!-- 名字-->
+                                            <a class="link" href="javascript:;" th:text="${configurations.get('yourName')}">
+                                                zq
+                                            </a>
+                                            <!--in-->
+                                            <span class="in">in</span>
+                                            <!--博客分类名-->
+                                            <span class="category-name">
+                                                <a class="category-name" rel="tag"
+                                                   th:href="@{'/category/' + ${blog.blogCategoryName}}"
+                                                   th:utext="${blog.blogCategoryName}">
+                                                </a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 博客创建时间-->
+                                <span class="pull-right time pc_time"
+                                      th:text="${#dates.format(blog.createTime, 'yyyy-MM-dd')}">
+                                    2019-01
+                                </span>
+                            </div>
+                            <h1 class="post-index-title"><a itemtype="url" th:href="@{'/blog/' + ${blog.blogId}}">
+                                <!-- 博客标题-->
+                                <th:block th:text="${blog.blogTitle}"></th:block>
+                            </a>
+                            </h1>
+                            <div class="post-content-preview article-body">
+                                <a th:href="@{'/blog/' + ${blog.blogId}}">
+                                    <!-- 博客封面-->
+                                    <img th:src="@{${blog.blogCoverImage}}" alt="">
+                                </a>
+                            </div>
+                            <div class="clearfix topic-footer">
+                                <span class="pull-left time mobile_time">2018-01</span>
+                            </div>
+                        </div>
+                    </article>
+                </th:block>
+            </th:block>
+            <!-- 分页导航条-->
+            <th:block th:if="${null != blogPageResult}">
+                <!-- 无序列表-->
+                <ul class="am-pagination">
+                    <li th:class="${blogPageResult.currPage==1}?'disabled' : 'am-pagination-prev'">
+                        <!-- 上一页按钮-->
+                        <a th:href="@{${blogPageResult.currPage==1}?'##':'/page/' + ${blogPageResult.currPage-1}}">&laquo;</a>
+                    </li>
+                    <li th:if="${blogPageResult.currPage-3 >=1}">
+                        <a th:href="@{'/page/' + ${blogPageResult.currPage-3}}" th:text="${blogPageResult.currPage -3}">
+                            1
+                        </a>
+                    </li>
+                    <li th:if="${blogPageResult.currPage-2 >=1}"><a
+                            th:href="@{'/page/' + ${blogPageResult.currPage-2}}"
+                            th:text="${blogPageResult.currPage -2}">1</a></li>
+                    <li th:if="${blogPageResult.currPage-1 >=1}"><a
+                            th:href="@{'/page/' + ${blogPageResult.currPage-1}}"
+                            th:text="${blogPageResult.currPage -1}">1</a></li>
+                    <li class="active"><a href="#" th:text="${blogPageResult.currPage}">1</a></li>
+                    <li th:if="${blogPageResult.currPage+1 <=blogPageResult.totalPage}"><a
+                            th:href="@{'/page/' + ${blogPageResult.currPage+1}}"
+                            th:text="${blogPageResult.currPage +1}">1</a></li>
+                    <li th:if="${blogPageResult.currPage+2 <=blogPageResult.totalPage}"><a
+                            th:href="@{'/page/' + ${blogPageResult.currPage+2}}"
+                            th:text="${blogPageResult.currPage +2}">1</a></li>
+                    <li th:if="${blogPageResult.currPage+3 <=blogPageResult.totalPage}"><a
+                            th:href="@{'/page/' + ${blogPageResult.currPage+3}}"
+                            th:text="${blogPageResult.currPage +3}">1</a></li>
+                    <li th:class="${blogPageResult.currPage==blogPageResult.totalPage}?'disabled' : ''">
+                        <!-- 下一页按钮-->
+                        <a th:href="@{${blogPageResult.currPage==blogPageResult.totalPage}?'##' : '/page/' + ${blogPageResult.currPage+1}}">
+                            &raquo;
+                        </a>
+                    </li>
+                </ul>
+            </th:block>
+        </div>
+    </main>
+</div>
+</html>
